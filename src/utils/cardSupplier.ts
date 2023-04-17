@@ -1,11 +1,12 @@
 export type Card = {
+    idx: number;
     name: string;
     isUp: boolean;
     isPaired: boolean;
 }
 
 export function createCards(): Card[]{
-    return cardNameSupplier().map((cardName: string) => ({ name: cardName, isUp: false, isPaired: false }))
+    return cardNameSupplier().map((cardName: string, index: number) => ({ idx: index, name: cardName, isUp: false, isPaired: false }))
 }
 
 function cardNameSupplier(): string[] {
