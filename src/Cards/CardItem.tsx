@@ -4,14 +4,14 @@ import "./CardItem.css"
 type CardProps = {
     idx: number;
     href: string;
-    onClick: (isUp: boolean) => void;
+    onClick: () => void;
     isUp: boolean;
     isPaired: boolean;
 }
     
 export const CardItem = ({ idx, href, onClick, isUp, isPaired }: CardProps) => {
     const handleClick = () => {
-        onClick(!isUp);
+        onClick();
     }
     const className = isPaired ? 'pairedCard' : 'upCard';
     return (

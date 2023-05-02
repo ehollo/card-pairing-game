@@ -2,23 +2,22 @@ export type Card = {
     idx: number;
     name: string;
     isUp: boolean;
-    isPaired: boolean;
 }
 
-export function createCards(): Card[]{
-    return cardNameSupplier().map((cardName: string, index: number) => ({ idx: index, name: cardName, isUp: false, isPaired: false }))
+export function createCards(cardNumber: number = 20): Card[]{
+    return cardNameSupplier(cardNumber).map((cardName: string, index: number) => ({ idx: index, name: cardName, isUp: false}))
 }
 
-function cardNameSupplier(): string[] {
+function cardNameSupplier(cardNumber: number): string[] {
     const origCards: string[] = createCardNames(19);
     const cards: string[] = [];
-    for(let i = 0; i < 10; i++) {
+    for(let i = 0; i < cardNumber/2; i++) {
         const randIdx = Math.floor(Math.random()*origCards.length);
         cards.push(origCards[randIdx]);
         cards.push(origCards[randIdx]);
         origCards.splice(randIdx, 1);
     }
-    for(let i = 0; i < 20; i++) {
+    for(let i = 0; i < cardNumber; i++) {
         const randIdx1 = Math.floor(Math.random()*cards.length);
         const randIdx2 = Math.floor(Math.random()*cards.length);
         const card = cards.splice(randIdx1, 1)[0];

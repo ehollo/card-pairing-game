@@ -1,39 +1,48 @@
-import * as React from "react"
-import { Card } from "./utils/cardSupplier";
+import * as React from "react";
 import { Cards } from "./Cards/Cards";
+import Footer from "./footer/Footer";
+import CardContext from "./context/CardContext";
+import GameOverDialog from "./dialog/GameOverDialog";
 require("./app.css");
 
 export const App = () => {
-    const [score, setScore] = React.useState(0);
-    const [isCheckMarkVisible, setCheckMarkVisible] = React.useState(false);
-    const [restart, setRestart] = React.useState(false);
-    const handleCardClick = (card: Card, matched: boolean, isCardSelectable: boolean) => {
-        if (!card.isUp && isCardSelectable) {
-            setScore(score + 1);
-            if (matched) {
-                setCheckMarkVisible(true);
-                setTimeout(() => setCheckMarkVisible(false), 1300);
-            }
-        }
-    }
+  const { cards, setUpCards, setPairedCards, pairedCards } =
+    React.useContext(CardContext);
+  const [isSelectionEnabled, setIsSelectionEnabled] = React.useState(true);
+  const [isCheckMarkVisible, setCheckMarkVisible] = React.useState(false);
 
-    const handleRestarted = () => {
-        setRestart(false);
+  const handleTurnOver = (card1: number, card2: number) => {
+    const isMatched = cards[card1].name === cards[card2].name;
+    if (isMatched) {
+      setCheckMarkVisible(true);
+      setUpCards([]);
+      setPairedCards([...pairedCards, card1, card2]);
+      setTimeout(() => setCheckMarkVisible(false), 1300);
+    } else {
+      turnbackUnmatchedCards();
     }
+  };
 
-    return (
-        <div className="container">
-            <Cards onCardClick={handleCardClick} restart={restart} onRestarted={handleRestarted} />
-            <div className="footer">
-                <div></div>
-                <div className="result">
-                    <p className="score">Your points: {score}</p>
-                    <button className="button" onClick={() => {
-                        setRestart(true);
-                        setScore(0);
-                    }}>Reload</button>
-                </div>
-                {isCheckMarkVisible && <img className="check" src="./assets/checkMark.gif" />}
-            </div>
-        </div>)
-}
+  const turnbackUnmatchedCards = () => {
+    setIsSelectionEnabled(false);
+    setTimeout(() => {
+      setUpCards([]);
+      setIsSelectionEnabled(true);
+    }, 800);
+  };
+
+  const isGameEnd = cards.length === pairedCards.length;
+
+  return (
+    <div className="container">
+      <Cards
+        isSelectionEnabled={isSelectionEnabled}
+        handleTurnOver={handleTurnOver}
+      />
+      <Footer isCheckMarkVisible={isCheckMarkVisible} />
+      {isGameEnd && (
+        <GameOverDialog />
+      )}
+    </div>
+  );
+};
