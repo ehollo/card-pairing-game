@@ -1,8 +1,17 @@
 .input {
-    margin: 4px;
-    padding: 5px;
-    font-size: 1.6em;
-    border-radius: 6px;
-    background-color: hsl(286, 49%, 93%);
-  
+  margin: 4px 8px 4px 4px;
+  padding: 5px;
+  font-size: 1.3em;
+  border-radius: 6px;
+  background-color: hsl(286, 49%, 93%);
+}
+
+.text {
+  padding: 1px 1px 8px 1px;
+  font-size: 1.2rem;
+}
+
+.text-label {
+  font-size: 1.3em;
+  padding: 1px 8px 1px 1px;
 }

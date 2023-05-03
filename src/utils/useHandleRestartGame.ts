@@ -8,7 +8,7 @@ const useHandleRestartGame = () => {
 
   const handleRestartGame = () => {
     setClickNum(0);
-    setCards(createCards(4));
+    setCards(createCards());
     setUpCards([]);
     setPairedCards([]);
   };

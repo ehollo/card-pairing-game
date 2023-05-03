@@ -1,0 +1,21 @@
+.summary {
+  padding: 2px 2px 6px 6px;
+  font-size: 1.5em;
+  font-weight: bold;
+  color: hsl(287, 91%, 31%);
+}
+
+.text {
+  padding: 1px;
+  font-size: 1.2rem;
+}
+
+.players {
+    margin: 8px 0px 16px 0px;
+}
+
+.player {
+  list-style: none;
+  padding: 2px;
+  font-size: 1.1rem;
+}

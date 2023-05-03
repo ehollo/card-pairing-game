@@ -20,7 +20,7 @@ result {
 
 .score {
     padding: 2px;
-    font-size: 26px;
+    font-size: 1.5em;
     font-weight: bold;
     color: hsl(287, 91%, 31%);
 }
@@ -32,10 +32,10 @@ result {
 }
 
 .check {
-    height: 13vh;
+    height: 11vh;
 }
 
-@media (max-width: 300px) {
+/* @media (max-width: 300px) {
     .footer {
         grid-template-columns: 1fr;
     }
@@ -43,4 +43,4 @@ result {
     .check-mark {
         justify-content: center;
     }
-}
+} */

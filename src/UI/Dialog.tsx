@@ -1,29 +1,29 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import classes from "./dialog.module.css";
+import classes from "./Dialog.module.css";
 import { Fragment } from "react";
 import useHandleRestartGame from "../utils/useHandleRestartGame";
 
 type DialogProps = {
   children: JSX.Element | JSX.Element[];
-  // onClose(): void;
+  onClose(): void;
 };
 
 const dialogModal = document.getElementById("dialog");
 
-const Dialog = ({ children }: DialogProps) => {
-  const {restart} = useHandleRestartGame();
+const Dialog = ({ children, onClose }: DialogProps) => {
+  // const {restart} = useHandleRestartGame();
 
-  const handleRestart = () => {
-    console.log("in the restart")
-    restart();
-}
+//   const handleRestart = () => {
+//     console.log("in the restart")
+//     restart();
+// }
 
   return (
     <Fragment>
       {ReactDOM.createPortal(
         <div className={classes.backdrop} 
-        onClick={handleRestart}></div>,
+        onClick={onClose}></div>,
         dialogModal
       )}
       {ReactDOM.createPortal(

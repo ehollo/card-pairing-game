@@ -1,9 +1,10 @@
 import * as React from "react";
-import { Cards } from "./Cards/Cards";
+import { Cards } from "./cards/Cards";
 import Footer from "./footer/Footer";
 import CardContext from "./context/CardContext";
 import GameOverDialog from "./dialog/GameOverDialog";
-require("./app.css");
+import classes from "./app.module.css";
+import Header from "./header/Header";
 
 export const App = () => {
   const { cards, setUpCards, setPairedCards, pairedCards } =
@@ -17,7 +18,7 @@ export const App = () => {
       setCheckMarkVisible(true);
       setUpCards([]);
       setPairedCards([...pairedCards, card1, card2]);
-      setTimeout(() => setCheckMarkVisible(false), 1300);
+      setTimeout(() => setCheckMarkVisible(false), 1000);
     } else {
       turnbackUnmatchedCards();
     }
@@ -28,21 +29,20 @@ export const App = () => {
     setTimeout(() => {
       setUpCards([]);
       setIsSelectionEnabled(true);
-    }, 800);
+    }, 600);
   };
 
   const isGameEnd = cards.length === pairedCards.length;
 
   return (
-    <div className="container">
+    <div className={classes.container}>
+      <Header />
       <Cards
         isSelectionEnabled={isSelectionEnabled}
         handleTurnOver={handleTurnOver}
       />
       <Footer isCheckMarkVisible={isCheckMarkVisible} />
-      {isGameEnd && (
-        <GameOverDialog />
-      )}
+      {isGameEnd && <GameOverDialog />}
     </div>
   );
 };
