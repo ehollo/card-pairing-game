@@ -13,14 +13,24 @@ export const CardItem = ({ idx, href, onClick, isUp, isPaired }: CardProps) => {
   const handleClick = () => {
     onClick();
   };
-  const className = isPaired ? "pairedCard" : "upCard";
+  const classNameUp = isPaired ? "paired-card" : "up-card";
+
+  const downCard = () => {
+    return !isUp && !isPaired && <div className="down-card" />;
+  };
+
+  const upCard = () => {
+    return (
+      (isUp || isPaired) && (
+        <img src={href} className={classNameUp} alt="One of the cards" />
+      )
+    );
+  };
+
   return (
     <div key={"card" + idx} className="card" onClick={handleClick}>
-      {isUp || isPaired ? (
-        <img src={href} className={className} alt="One of the cards" />
-      ) : (
-        <div className="downCard" />
-      )}
+        {downCard()}
+        {upCard()}
     </div>
   );
 };
