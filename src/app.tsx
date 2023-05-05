@@ -1,61 +1,48 @@
-import * as React from "react"
-import { CardItem } from "./CardItem";
-import { Card, createCards } from "./utils/cardSupplier";
-require("./app.css")
-
-
+import * as React from "react";
+import { Cards } from "./cards/Cards";
+import Footer from "./footer/Footer";
+import CardContext from "./context/CardContext";
+import classes from "./app.module.css";
+import Header from "./header/Header";
+import GameOver from "./game_over/GameOver";
 
 export const App = () => {
-    const [cards, setCards] = React.useState(createCards());
-    const [upCards, setUpCards] = React.useState([]);
-    const [score, setScore] = React.useState(0);
-    const [isCheckMarkVisible, setCheackMarkVisible] = React.useState(false);
-    const [isCardSelectable, setIsCardSelectable] = React.useState(true);
-    const handleClick = (card: Card, index: number) => {
-        if (!card.isUp && isCardSelectable) {
-            setScore(score + 1);
-            setCards(cards.map<Card>((card, idx) => idx === index ? { ...card, isUp: true } : { ...card }))
-            const newCards: Card[] = [...upCards, card];
-            setUpCards(newCards);
-            if (newCards.length === 2) {
-                handleCardPairs(newCards[0], newCards[1]);
-            }
-        }
+  const { cards, setUpCards, setPairedCards, pairedCards } =
+    React.useContext(CardContext);
+  const [isSelectionEnabled, setIsSelectionEnabled] = React.useState(true);
+  const [isCheckMarkVisible, setCheckMarkVisible] = React.useState(false);
+
+  const handleTurnOver = (card1: number, card2: number) => {
+    const isMatched = cards[card1].name === cards[card2].name;
+    if (isMatched) {
+      setCheckMarkVisible(true);
+      setUpCards([]);
+      setPairedCards([...pairedCards, card1, card2]);
+      setTimeout(() => setCheckMarkVisible(false), 1000);
+    } else {
+      turnbackUnmatchedCards();
     }
-    const handleCardPairs = async (card1: Card, card2: Card) => {
-        if (card1.name === card2.name) {
-            setCards(cards => cards.map(card => card.name === card1.name ? { ...card, isPaired: true } : card));
-            setUpCards([]);
-            setCheackMarkVisible(true);
-            setTimeout(() => setCheackMarkVisible(false), 1300);
-        } else {
-            await turnbackUnmatchedCards();
-        }
-    }
-    const turnbackUnmatchedCards = () => {
-        setIsCardSelectable(false);
-        return new Promise(() => {
-            setTimeout(() => {
-                setCards(cards => cards.map((card) => card.isPaired ? card : { ...card, isUp: false }));
-                setIsCardSelectable(true);
-                setUpCards([]);
-            }, 800);
-        });
-    }
-    return (<div className="container">
-        <div key="cards" className="cards">
-            {cards.map((card, index) => <CardItem {...card} idx={index} href={"./assets/" + card.name} onClick={(isUp: boolean) => handleClick(card, index)}  ></CardItem>)}
-        </div>
-        <div className="footer">
-            <div></div>
-            <div className="result">
-                <p className="score">Your points: {score}</p>
-                <button className="button" onClick={() => {
-                    setCards(createCards());
-                    setScore(0);
-                }}>Reload</button>
-            </div>
-            {isCheckMarkVisible && <img className="check" src="./assets/checkMark.gif" />}
-        </div>
-    </div>)
-}
+  };
+
+  const turnbackUnmatchedCards = () => {
+    setIsSelectionEnabled(false);
+    setTimeout(() => {
+      setUpCards([]);
+      setIsSelectionEnabled(true);
+    }, 600);
+  };
+
+  const isGameEnd = cards.length === pairedCards.length;
+
+  return (
+    <div className={classes.container}>
+      <Header />
+      <Cards
+        isSelectionEnabled={isSelectionEnabled}
+        handleTurnOver={handleTurnOver}
+      />
+      <Footer isCheckMarkVisible={isCheckMarkVisible} />
+      {<GameOver isGameOver={isGameEnd}/>}
+    </div>
+  );
+};

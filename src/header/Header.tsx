@@ -1,0 +1,8 @@
+import * as React from "react";
+import classes from "./Header.module.css";
+
+const Header = () => {
+  return <div className={classes.text}>A card pairing game. Click!</div>;
+};
+
+export default Header;
