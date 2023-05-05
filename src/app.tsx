@@ -2,9 +2,9 @@ import * as React from "react";
 import { Cards } from "./cards/Cards";
 import Footer from "./footer/Footer";
 import CardContext from "./context/CardContext";
-import GameOverDialog from "./dialog/GameOverDialog";
 import classes from "./app.module.css";
 import Header from "./header/Header";
+import GameOver from "./game_over/GameOver";
 
 export const App = () => {
   const { cards, setUpCards, setPairedCards, pairedCards } =
@@ -42,7 +42,7 @@ export const App = () => {
         handleTurnOver={handleTurnOver}
       />
       <Footer isCheckMarkVisible={isCheckMarkVisible} />
-      {isGameEnd && <GameOverDialog />}
+      {<GameOver isGameOver={isGameEnd}/>}
     </div>
   );
 };

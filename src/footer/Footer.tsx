@@ -9,8 +9,7 @@ type FooterProps = {
 };
 
 const Footer = ({ isCheckMarkVisible }: FooterProps) => {
-  const { clickNum } =
-    React.useContext(CardContext);
+  const { clickNum } = React.useContext(CardContext);
   const { restart } = useHandleRestartGame();
 
   return (

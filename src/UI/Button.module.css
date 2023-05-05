@@ -1,11 +1,11 @@
 .button {
-    margin: 4px;
-    padding: 5px;
-    font-size: 1.3em;
-    border-radius: 6px;
-    background-color: hsl(287, 85%, 58%);
+  margin: 4px;
+  padding: 5px;
+  font-size: 1.3em;
+  border-radius: 6px;
+  background-color: hsl(287, 85%, 58%);
 }
 
 .button:hover {
-    background-color: hsl(287, 91%, 31%);
+  background-color: hsl(287, 91%, 31%);
 }

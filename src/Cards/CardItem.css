@@ -1,17 +1,46 @@
-.card > * {
+.card {
   width: 100px;
   height: 120px;
+}
+
+.flip-card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  transition: transform 0.6s;
+}
+
+.card.clicked .flip-card {
+  transform: rotateY(-180deg);
+}
+
+.down-card,
+.up-card,
+.paired-card {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  border-radius: 10px;
   box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
   -webkit-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
-  border-radius: 10px;
+}
+
+.paired-card {
+  transform: rotateY(180deg);
+  opacity: 0.7;
   background-color: white;
 }
 
-.pairedCard {
-  opacity: 0.7;
+.down-card {
+  background-color: cadetblue;
 }
 
-.downCard {
-  background-color: cadetblue;
+.up-card {
+  transform: rotateY(180deg);
+  background-color: white;
 }

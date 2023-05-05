@@ -1,12 +1,11 @@
 import * as React from "react";
 import classes from "./UserScoresList.module.css";
 import { UserInfo } from "./GameOverDialog";
+import CardContext from "../../context/CardContext";
 
-type UserScoresListProps = {
-  score: number;
-};
+const UserScroresList = () => {
+  const { clickNum } = React.useContext(CardContext);
 
-const UserScroresList = ({ score }: UserScoresListProps) => {
   let players =
     (JSON.parse(localStorage.getItem("userScores")) as UserInfo[]) || [];
 
@@ -44,7 +43,7 @@ const UserScroresList = ({ score }: UserScoresListProps) => {
       <h1 className={classes.text}>
         Congratulations! You have found all the matching pairs!
       </h1>
-      <div className={classes.summary}>Your score is {score}</div>
+      <div className={classes.summary}>Your score is {clickNum}</div>
       {noPlayers()}
       {getPlayersList()}
     </>
